@@ -20,7 +20,7 @@ def lambda_handler(event, context):
         path = event.get('path')
 
         if http_method == 'GET' and path == status_check_path:
-            response = build_response(200, 'Service is operational')
+            response = build_response(200, 'Brigid and Tracy\'s project is working.')
         elif http_method == 'GET' and path == client_path:
             client_id = event['queryStringParameters']['clientid']
             response = get_client(client_id)
@@ -35,7 +35,7 @@ def lambda_handler(event, context):
             #body = json.loads(event['body'])
             #response = delete_client(body['clientid'])
             client_id = event['queryStringParameters']['clientid']
-            response = delete_client(client_id)
+            response = delete_mod_client(client_id)
         else:
             response = build_response(404, '404 Not Found')
 
@@ -56,7 +56,7 @@ def get_client(client_id):
 def delete_mod_client(client_id):
     try:
         response = dynamodb_table.delete_item(Key={'clientid': client_id})
-        return build_response(200, 'Successfully deleted ', client_id, ".")
+        return build_response(200, 'Successful deletion.')
     except ClientError as e:
         print('Error:', e)
         return build_response(400, e.response['Error']['Message'])
@@ -147,3 +147,6 @@ def build_response(status_code, body):
         },
         'body': json.dumps(body, cls=DecimalEncoder)
     }
+
+
+
