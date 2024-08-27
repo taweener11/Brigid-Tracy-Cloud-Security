@@ -1,0 +1,23 @@
+{
+    "clientid": "1",
+    "name": "Clippy BeEFe",
+    "address": "11 Paperclip Circle",
+    "city": "Clipton",
+    "state": "Clipperland",
+    "zipCode": "03755",
+    "dateOfBirth": "1900-01-01",
+    "phoneNumber": "555-123-4567",
+    "faxNumber": "555-765-4321",
+    "emailAddress": "clippy@hotmail.com",
+    "socialSecurityNumber": "123-45-6789",
+    "medicalRecordNumber": "MRN123456789",
+    "healthPlanBeneficiaryNumber": "HPN987654321",
+    "accountNumber": "ACC123456789",
+    "certificateOrLicenseNumber": "LIC987654321",
+    "vehicleIdentifier": "VIN1234567890123456",
+    "deviceIdentifier": "DEV1234567890",
+    "webURL": "https://www.clippyfake.com",
+    "ipAddress": "192.168.1.1",
+    "biometricIdentifier": "Fingerprint123",
+    "photographicImage": "https://www.clippyfake.com/image.jpg"
+}
