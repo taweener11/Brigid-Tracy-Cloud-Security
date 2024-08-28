@@ -11,7 +11,7 @@ Cloud Security Project on Serverless Computing with AWS Lambda and Access Contro
 
 ## Key Features
 *  Milestone 3 - Functional Cloud Environment: We first built a simple version of a serverless CRUD HTTP API to demonstrate a functional cloud environment for a healthcare use case. 
-*  Milestone 4 - Cloud Security Solutions: We expanded upon our first HTTP API by building a CRUD REST API using Lambda and modeling access controls using Cognito for added security. 
+*  Milestone 4 - Cloud Security Solutions: We expanded upon our first HTTP API by building a CRUD REST API using Lambda and modeling access controls using Cognito for added security, in the 2 labs linked above. 
 
 ## Setup Requirements 
 * Access to AWS Console with extended permissions to ensure access to the following HIPAA eligible services: 
