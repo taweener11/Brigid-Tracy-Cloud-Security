@@ -1,16 +1,20 @@
+# Boilerplate 
 import json
 import boto3
 from botocore.exceptions import ClientError
 from decimal import Decimal
 from boto3.dynamodb.conditions import Key
 
+# Set up DynamoDB 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 dynamodb_table = dynamodb.Table('phi_info')
 
+# Clarify methods 
 status_check_path = '/status'
 client_path = '/client'
 clients_path = '/clients'
 
+# Write lambda function 
 def lambda_handler(event, context):
     print('Request event: ', event)
     response = None
@@ -19,6 +23,7 @@ def lambda_handler(event, context):
         http_method = event.get('httpMethod')
         path = event.get('path')
 
+        # CRUD if-elif-else ladder
         if http_method == 'GET' and path == status_check_path:
             response = build_response(200, 'Brigid and Tracy\'s project is working.')
         elif http_method == 'GET' and path == client_path:
@@ -45,6 +50,7 @@ def lambda_handler(event, context):
    
     return response
 
+# Read 
 def get_client(client_id):
     try:
         response = dynamodb_table.get_item(Key={'clientid': client_id})
@@ -52,7 +58,8 @@ def get_client(client_id):
     except ClientError as e:
         print('Error:', e)
         return build_response(400, e.response['Error']['Message'])
-        
+
+# Delete, my modified function to use query parameters instead of a JSON object 
 def delete_mod_client(client_id):
     try:
         response = dynamodb_table.delete_item(Key={'clientid': client_id})
@@ -61,6 +68,7 @@ def delete_mod_client(client_id):
         print('Error:', e)
         return build_response(400, e.response['Error']['Message'])
 
+# Read all 
 def get_clients():
     try:
         scan_params = {
@@ -71,6 +79,7 @@ def get_clients():
         print('Error:', e)
         return build_response(400, e.response['Error']['Message'])
 
+# Read all helper function 
 def scan_dynamo_records(scan_params, item_array):
     response = dynamodb_table.scan(**scan_params)
     item_array.extend(response.get('Items', []))
@@ -81,6 +90,7 @@ def scan_dynamo_records(scan_params, item_array):
     else:
         return {'clients': item_array}
 
+# Create 
 def save_client(request_body):
     try:
         dynamodb_table.put_item(Item=request_body)
@@ -94,6 +104,7 @@ def save_client(request_body):
         print('Error:', e)
         return build_response(400, e.response['Error']['Message'])
 
+# Update
 def modify_client(client_id, update_key, update_value):
     try:
         response = dynamodb_table.update_item(
@@ -112,6 +123,7 @@ def modify_client(client_id, update_key, update_value):
         print('Error:', e)
         return build_response(400, e.response['Error']['Message'])
 
+# Delete, note that this function is not called because it uses a JSON object
 def delete_client(client_id):
     try:
         response = dynamodb_table.delete_item(
@@ -128,6 +140,7 @@ def delete_client(client_id):
         print('Error:', e)
         return build_response(400, e.response['Error']['Message'])
 
+# Helper 
 class DecimalEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Decimal):
@@ -139,6 +152,7 @@ class DecimalEncoder(json.JSONEncoder):
         # Let the base class default method raise the TypeError
         return super(DecimalEncoder, self).default(obj)
 
+# Helper 
 def build_response(status_code, body):
     return {
         'statusCode': status_code,
